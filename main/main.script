@@ -1,0 +1,14 @@
+function init(self)
+  local proxy = msg.url("secondary#collectionproxy")
+  self.t = 0
+  msg.post(proxy, "load")
+  msg.post(proxy, "enable")
+end
+
+function update(self, dt)
+  self.t = self.t + dt * 3
+  go.set_position(vmath.vector3(100 * math.sin(self.t), 50, 0), '#')
+  msg.post("secondary:/go#script", "set_position", {
+    position = vmath.vector3(100 * math.sin(self.t), -50, 0)
+  })
+end
